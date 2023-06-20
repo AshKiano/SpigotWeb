@@ -1,0 +1,6 @@
+name: SpigotWeb
+version: '${project.version}'
+main: com.ashkiano.spigotweb.SpigotWeb
+api-version: '1.20'
+author: AshKiano
+description: Setups webserver on spigot server
