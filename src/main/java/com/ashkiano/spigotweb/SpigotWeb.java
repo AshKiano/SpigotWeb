@@ -8,6 +8,7 @@ import org.eclipse.jetty.servlet.ServletHolder;
 
 import java.io.File;
 
+//TODO automaticky vytvářet www složku a v ní nějaký basic index.html
 public class SpigotWeb extends JavaPlugin {
     private Server server;
 

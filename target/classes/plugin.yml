@@ -1,6 +1,6 @@
 name: SpigotWeb
 version: '1.1'
 main: com.ashkiano.spigotweb.SpigotWeb
-api-version: '1.20'
+api-version: '1.16'
 author: AshKiano
 description: Setups webserver on spigot server
