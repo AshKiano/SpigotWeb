@@ -6,9 +6,12 @@ import org.eclipse.jetty.servlet.DefaultServlet;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.URL;
 
 public class SpigotWeb extends JavaPlugin {
     private Server server;
@@ -58,7 +61,14 @@ public class SpigotWeb extends JavaPlugin {
         try {
             // Start the server
             server.start();
-            getLogger().info("Server started on port " + port);
+
+            // Get the public IP address
+            URL ipify = new URL("https://api.ipify.org?format=txt");
+            BufferedReader in = new BufferedReader(new InputStreamReader(ipify.openStream()));
+            String ip = in.readLine(); //you get the IP as a String
+            in.close();
+
+            getLogger().info("Server started on " + ip + ":" + port);
         } catch (Exception e) {
             e.printStackTrace();
         }
