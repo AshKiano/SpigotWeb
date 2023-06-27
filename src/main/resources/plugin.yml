@@ -4,3 +4,12 @@ main: com.ashkiano.spigotweb.SpigotWeb
 api-version: '1.16'
 author: AshKiano
 description: Setups webserver on spigot server
+commands:
+  spigotwebreload:
+    description: Reloads the configuration and restarts the web server.
+    usage: /<command>
+    permission: spigotweb.reload
+permissions:
+  spigotweb.reload:
+    description: Allows the player to reload the web server configuration
+    default: op
