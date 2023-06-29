@@ -16,15 +16,20 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
 
-//TODO přidat configurovatelnou permisi na reload
 //TODO přidat překlad hlášek
 //TODO přidat logování přístupů na web
 public class SpigotWeb extends JavaPlugin {
     private Server server;
     private int port;
+    private String reloadPermission;
 
     @Override
     public void onEnable() {
+        // Save the default configuration if it does not exist
+        this.saveDefaultConfig();
+        this.reloadConfig();
+        // Get the reload permission from the configuration file
+        reloadPermission = this.getConfig().getString("reload-permission", "spigotweb.reload");
         // Call the server setup method
         setupServer();
     }
@@ -45,9 +50,11 @@ public class SpigotWeb extends JavaPlugin {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (command.getName().equalsIgnoreCase("spigotwebreload")) {
-            // Check if the sender has the "spigotweb.reload" permission
-            if (!(sender instanceof Player) || ((Player) sender).hasPermission("spigotweb.reload")) {
+            // Check if the sender has the specified reload permission
+            if (!(sender instanceof Player) || ((Player) sender).hasPermission(reloadPermission)) {
                 this.reloadConfig();
+                // Update the reload permission from the configuration file
+                reloadPermission = this.getConfig().getString("reload-permission", "spigotweb.reload");
                 port = this.getConfig().getInt("port");
                 setupServer();
                 sender.sendMessage("Configuration has been reloaded and server has been restarted.");
