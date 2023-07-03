@@ -1,1 +1,12 @@
-port: 32303
+# This is the port on which the web server will run. 
+# Change it to the port you want the web server to listen on.
+port: 8080
+
+# This is the permission needed for a player to reload the plugin.
+# Change it to the permission string you want to check for when a player tries to use the reload command.
+reload-permission: spigotweb.reload
+
+reload-message: "Configuration has been reloaded and server has been restarted."
+no-permission-message: "You do not have permission to use this command."
+server-started-message: "Server started on "
+server-stopped-message: "Server stopped"

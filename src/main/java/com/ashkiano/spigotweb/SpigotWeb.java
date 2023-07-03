@@ -23,11 +23,19 @@ public class SpigotWeb extends JavaPlugin {
     private int port;
     private String reloadPermission;
 
+    // Messages
+    private String reloadMessage;
+    private String noPermissionMessage;
+    private String serverStartedMessage;
+    private String serverStoppedMessage;
+
     @Override
     public void onEnable() {
         // Save the default configuration if it does not exist
         this.saveDefaultConfig();
         this.reloadConfig();
+        // Get the messages from the configuration file
+        loadMessages();
         // Get the reload permission from the configuration file
         reloadPermission = this.getConfig().getString("reload-permission", "spigotweb.reload");
         // Call the server setup method
@@ -40,7 +48,7 @@ public class SpigotWeb extends JavaPlugin {
             if (server != null) {
                 // Stop the server if it is running
                 server.stop();
-                getLogger().info("Server stopped");
+                getLogger().info(serverStoppedMessage);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -53,18 +61,27 @@ public class SpigotWeb extends JavaPlugin {
             // Check if the sender has the specified reload permission
             if (!(sender instanceof Player) || ((Player) sender).hasPermission(reloadPermission)) {
                 this.reloadConfig();
+                // Update the messages from the configuration file
+                loadMessages();
                 // Update the reload permission from the configuration file
                 reloadPermission = this.getConfig().getString("reload-permission", "spigotweb.reload");
                 port = this.getConfig().getInt("port");
                 setupServer();
-                sender.sendMessage("Configuration has been reloaded and server has been restarted.");
+                sender.sendMessage(reloadMessage);
             } else {
-                sender.sendMessage("You do not have permission to use this command.");
+                sender.sendMessage(noPermissionMessage);
             }
             return true;
         }
 
         return false;
+    }
+
+    private void loadMessages() {
+        reloadMessage = this.getConfig().getString("reload-message", "Configuration has been reloaded and server has been restarted.");
+        noPermissionMessage = this.getConfig().getString("no-permission-message", "You do not have permission to use this command.");
+        serverStartedMessage = this.getConfig().getString("server-started-message", "Server started on ");
+        serverStoppedMessage = this.getConfig().getString("server-stopped-message", "Server stopped");
     }
 
     private void setupServer() {
