@@ -16,6 +16,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
 
+//TODO zmenit port a jazyk prikazem
 //TODO přidat překlad hlášek
 //TODO přidat logování přístupů na web
 public class SpigotWeb extends JavaPlugin {
@@ -140,7 +141,7 @@ public class SpigotWeb extends JavaPlugin {
             String ip = in.readLine();
             in.close();
 
-            getLogger().info("Server started on " + ip + ":" + port);
+            getLogger().info(serverStartedMessage + ip + ":" + port);
         } catch (Exception e) {
             e.printStackTrace();
         }
