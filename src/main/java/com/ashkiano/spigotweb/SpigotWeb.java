@@ -1,5 +1,9 @@
 package com.ashkiano.spigotweb;
 
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -18,7 +22,7 @@ import java.net.URL;
 
 //TODO zmenit port a jazyk prikazem
 //TODO přidat překlad hlášek
-//TODO přidat logování přístupů na web
+//TODO upravit logování přístupů na web
 public class SpigotWeb extends JavaPlugin {
     private Server server;
     private int port;
@@ -130,6 +134,11 @@ public class SpigotWeb extends JavaPlugin {
             // Add a default servlet to handle requests and enable directory listing
             ServletHolder holder = context.addServlet(DefaultServlet.class, "/");
             holder.setInitParameter("dirAllowed", "true");
+
+            // Add a logging servlet to handle requests
+            ServletHolder loggingHolder = context.addServlet(LoggingServlet.class, "/*");
+            loggingHolder.setInitParameter("dirAllowed", "true");
+
             server.setHandler(context);
 
             // Start the server
@@ -144,6 +153,14 @@ public class SpigotWeb extends JavaPlugin {
             getLogger().info(serverStartedMessage + ip + ":" + port);
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    public static class LoggingServlet extends DefaultServlet {
+        @Override
+        protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+            System.out.println("Received request from " + req.getRemoteAddr());
+            super.service(req, resp);
         }
     }
 }
