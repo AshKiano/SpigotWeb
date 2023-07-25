@@ -1,7 +1,6 @@
 package com.ashkiano.spigotweb;
 
 import jakarta.servlet.ServletException;
-import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.bukkit.command.Command;
@@ -45,6 +44,8 @@ public class SpigotWeb extends JavaPlugin {
         reloadPermission = this.getConfig().getString("reload-permission", "spigotweb.reload");
         // Call the server setup method
         setupServer();
+
+        System.out.println("Thank you for using the SpigotWeb plugin! If you enjoy using this plugin, please consider making a donation to support the development. You can donate at: https://paypal.me/josefvyskocil");
     }
 
     @Override
