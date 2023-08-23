@@ -1,5 +1,5 @@
 name: SpigotWeb
-version: '1.11'
+version: '1.12'
 main: com.ashkiano.spigotweb.SpigotWeb
 api-version: '1.16'
 author: AshKiano
